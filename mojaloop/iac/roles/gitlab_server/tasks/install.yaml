@@ -30,6 +30,14 @@
   ansible.builtin.shell:
     cmd: "lsblk -o PATH,SERIAL | grep {{ backup_ebs_volume_id | replace('-', '') }} | cut -d' ' -f1"
   register: lsblk
+  when: cloud_platform == 'aws'
+
+- name: List Linux block devices
+  ansible.builtin.shell:
+    cmd: "lsblk -o PATH,SERIAL | grep {{ backup_volume_disk_name }} | cut -d' ' -f1"
+  register: lsblk
+  when: cloud_platform == 'oci'
+
 
 - name: Store EBS volume device name
   ansible.builtin.set_fact:
