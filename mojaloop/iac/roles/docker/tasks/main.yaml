@@ -30,7 +30,13 @@
   ansible.builtin.shell:
     cmd: "lsblk -o PATH,SERIAL | grep {{ docker_extra_ebs_volume_id | replace('-', '') }} | cut -d' ' -f1"
   register: lsblk
-  when: docker_extra_vol_mount
+  when: docker_extra_vol_mount and cloud_platform == 'aws'
+
+- name: List Linux block devices
+  ansible.builtin.shell:
+    cmd: "lsblk -o PATH,SERIAL | grep {{ docker_extra_disk_name }} | cut -d' ' -f1"
+  register: lsblk
+  when: docker_extra_vol_mount and cloud_platform == 'oci'
 
 - name: Store EBS volume device name
   ansible.builtin.set_fact:
