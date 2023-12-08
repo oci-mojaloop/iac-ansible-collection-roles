@@ -1764,7 +1764,7 @@ pages_external_url "http://pages.example.com/"
 ################################################################################
 # Let's Encrypt integration
 ################################################################################
-letsencrypt['enable'] = true
+#letsencrypt['enable'] = true    ### commented out as was hitting this issue https://gitlab.com/gitlab-org/gitlab/-/issues/372025
  letsencrypt['contact_emails'] = ["{{ letsencrypt_email }}"] # This should be an array of email addresses to add as contacts
  letsencrypt['group'] = 'root'
  letsencrypt['acme_production_endpoint'] = '{{ letsencrypt_endpoint }}'
